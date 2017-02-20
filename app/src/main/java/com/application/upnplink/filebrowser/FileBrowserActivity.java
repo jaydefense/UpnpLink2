@@ -174,7 +174,7 @@ public class FileBrowserActivity extends AppCompatActivity  implements ItemClick
     {
         //Toast.makeText(this, "Folder Clicked: "+ currentDir, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
-        intent.putExtra("Path",currentDir.toString());
+        intent.putExtra("PathFile",currentDir.toString()+"/"+fileItem.getName());
         intent.putExtra("FileName",fileItem.getName());
         setResult(RESULT_OK, intent);
         finish();

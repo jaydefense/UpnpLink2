@@ -19,4 +19,11 @@
     <string name="title_activity_search_upnp">Upnp</string>
     <string name="title_activity_file_browser">File</string>
     <string name="menu_server_upnp">Server Upnp</string>
+
+    <!-- -->
+    <string name="device_connected">Device connected: </string>
+    <string name="no_device_connected">No device connected</string>
+    <string name="server_connected">Server connected</string>
+    <!-- Application message -->
+    <string name="no_media_file_selected">No media file selected</string>
 </resources>

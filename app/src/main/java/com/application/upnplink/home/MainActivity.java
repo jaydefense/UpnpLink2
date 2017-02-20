@@ -19,9 +19,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.application.upnplink.R;
 import com.application.upnplink.filebrowser.FileBrowserActivity;
+import com.application.upnplink.mediaPlayer.VideoPlayerActivity;
 import com.application.upnplink.search.SearchUpnpActivity;
 import com.application.upnplink.upnp.UpnpRegistryListener;
 import com.application.upnplink.upnp.renderer.RendererMachine;
@@ -39,7 +41,9 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String default_device_name;
+    private String defaultDeviceName;
+    private String pathFileSelected;
+    private String fileNameSelected;
     private SharedPreferences sharedPreferences;
 
 
@@ -105,8 +109,8 @@ public class MainActivity extends AppCompatActivity
         // init preferences
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
 
-        // last Device used
-        default_device_name = PreferencesUtils.getPreference(sharedPreferences,"DEFAULT_DEVICE_NAME");
+        managePreference();
+
 
         // This will start the UPnP service if it wasn't already started
         getApplicationContext().bindService(
@@ -173,7 +177,13 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             startActivityForResult(intent,FileBrowserActivity.REQUEST_FILEBROWSER);
         } else if (id == R.id.nav_player) {
-
+            if (pathFileSelected != null) {
+                String url = pathFileSelected;
+                VideoPlayerActivity.showRemoteVideo(this, url);
+            } else {
+                Toast toast = Toast.makeText(this,  getString(R.string.no_media_file_selected), Toast.LENGTH_SHORT);
+                toast.show();
+            }
         } else if (id == R.id.nav_search_upnp) {
             Intent intent = new Intent(this, SearchUpnpActivity.class);
             startActivity(intent);
@@ -183,7 +193,7 @@ public class MainActivity extends AppCompatActivity
             if (rendererMachine == null) {
                 rendererMachine = new RendererMachine(upnpService);
                 TextView tv = (TextView) findViewById(R.id.serverStarted);
-                tv.setText("Server connected");
+                tv.setText(getString(R.string.server_connected));
             }
         } else if (id == R.id.nav_settings) {
 
@@ -202,20 +212,46 @@ public class MainActivity extends AppCompatActivity
                 System.out.println("retour : "+ data.getStringExtra("DeviceName"));
 
                 if (data.getStringExtra("DeviceName") != null) {
-                    connectedDeviceName.setText("Device connected: " + UpnpRegistryListener.SelectedDevice.getDisplayString());
+                    connectedDeviceName.setText(getString(R.string.device_connected) + UpnpRegistryListener.SelectedDevice.getDisplayString());
                     PreferencesUtils.putPreference(sharedPreferences,"DEFAULT_DEVICE_NAME",data.getStringExtra(UpnpRegistryListener.SelectedDevice.getIdentity().getUdn().getIdentifierString()));
                 } else {
-                    connectedDeviceName.setText("No device connected" );
+                    connectedDeviceName.setText(getString(R.string.no_device_connected));
                 }
             } else {
-                connectedDeviceName.setText("No device connected 2" );
+                connectedDeviceName.setText(getString(R.string.no_device_connected));
             }
         }
         else if (requestCode == FileBrowserActivity.REQUEST_FILEBROWSER){
             if (resultCode == RESULT_OK) {
+                fileNameSelected = data.getStringExtra("FileName");
+                pathFileSelected = data.getStringExtra("PathFile");
+                PreferencesUtils.putPreference(sharedPreferences,"DEFAULT_PATH_FILE",pathFileSelected );
+                PreferencesUtils.putPreference(sharedPreferences,"DEFAULT_FILE_NAME",fileNameSelected  );
                 TextView tv = (TextView) findViewById(R.id.fileSelected);
-                tv.setText(data.getStringExtra("FileName"));
+                tv.setText(fileNameSelected );
             }
+        }
+    }
+
+    /**
+     * Preference management
+      */
+    private void managePreference() {
+        TextView tv;
+
+        // Last Device UPNP
+        defaultDeviceName = PreferencesUtils.getPreference(sharedPreferences,"DEFAULT_DEVICE_NAME");
+        if (defaultDeviceName != null) {
+            tv = (TextView) findViewById(R.id.connectedDeviceName);
+            tv.setText(getString(R.string.device_connected) + defaultDeviceName);
+        }
+
+        // Last Movie File
+        pathFileSelected  = PreferencesUtils.getPreference(sharedPreferences,"DEFAULT_PATH_FILE");
+        fileNameSelected  = PreferencesUtils.getPreference(sharedPreferences,"DEFAULT_FILE_NAME");
+        if (fileNameSelected != null) {
+            tv = (TextView) findViewById(R.id.fileSelected);
+            tv.setText(fileNameSelected);
         }
     }
 }

@@ -45,7 +45,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="home.MainActivity" />
         </activity>
-
+        <activity android:name=".mediaPlayer.VideoPlayerActivity"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:configChanges="orientation|screenSize">
+        </activity>
         <service android:name="org.fourthline.cling.android.AndroidUpnpServiceImpl" />
     </application>
 
