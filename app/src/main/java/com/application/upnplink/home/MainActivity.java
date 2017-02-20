@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
@@ -118,6 +119,15 @@ public class MainActivity extends AppCompatActivity
                 serviceConnection,
                 Context.BIND_AUTO_CREATE
         );
+
+        // Call from external activity for the Video Player
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        if (data != null) {
+            setFileBrowserPreference(data.getLastPathSegment(), data.toString());
+            VideoPlayerActivity.showRemoteVideo(this, data.toString());
+        }
+
     }
 
     @Override
@@ -223,12 +233,7 @@ public class MainActivity extends AppCompatActivity
         }
         else if (requestCode == FileBrowserActivity.REQUEST_FILEBROWSER){
             if (resultCode == RESULT_OK) {
-                fileNameSelected = data.getStringExtra("FileName");
-                pathFileSelected = data.getStringExtra("PathFile");
-                PreferencesUtils.putPreference(sharedPreferences,"DEFAULT_PATH_FILE",pathFileSelected );
-                PreferencesUtils.putPreference(sharedPreferences,"DEFAULT_FILE_NAME",fileNameSelected  );
-                TextView tv = (TextView) findViewById(R.id.fileSelected);
-                tv.setText(fileNameSelected );
+                setFileBrowserPreference(data.getStringExtra("FileName"), data.getStringExtra("PathFile"));
             }
         }
     }
@@ -253,5 +258,15 @@ public class MainActivity extends AppCompatActivity
             tv = (TextView) findViewById(R.id.fileSelected);
             tv.setText(fileNameSelected);
         }
+    }
+
+    private void setFileBrowserPreference(String fileName, String pathFile) {
+        fileNameSelected = fileName;
+        pathFileSelected = pathFile;
+        PreferencesUtils.putPreference(sharedPreferences,"DEFAULT_PATH_FILE",pathFileSelected );
+        PreferencesUtils.putPreference(sharedPreferences,"DEFAULT_FILE_NAME",fileNameSelected  );
+        TextView tv = (TextView) findViewById(R.id.fileSelected);
+        tv.setText(fileNameSelected );
+
     }
 }
