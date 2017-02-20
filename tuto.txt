@@ -1,0 +1,117 @@
+Specif:
+1) Page accueil
+1a) Afficher le Device connecté
+1b) Menu type Drawer
+1ba) Recherche Upnp
+1bb) Reglage
+1c) Une WebView centrale
+
+2)  Recherche Upnp service
+2a) Affichage de la liste des Devices Media Renderer
+2b) Selection du Device
+2c) Actualiser la liste
+
+1) Upnp Media Renderer
+
+2) Upnp Media Browser
+3
+
+
+Android studio 2.2
+
+- Nouveau projet 
+- Nom: UpnpLink
+- Company domain : application.com
+- Phone and Tablet: API 15 (Android 4.0.3)
+-> No Activity
+
+Création de la Main Activity
+-> New Activity-> Navigation Drawer Activity
+- Name: MainActivity
+- Layout name: activity_main
+- Title : UpnpLink
+- Launcher Activity :Yes
+- Package name: com.application.upnplink.main
+- Target source: main
+-> Resoudre les erreurs d'imports (import com.application.upnplink.R)
+
+-> Ajouter la lecture des données stockées pour connaitre le dernier Device Upnp utilisé
+
+Gradle
+1) ajt
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url 'http://4thline.org/m2'
+    }
+}
+2)
+    packagingOptions {
+        exclude 'libs/jackson-core-asl-1.9.13.jar'
+        exclude 'libs/jackson-mapper-asl-1.9.13.jar'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/beans.xml'
+    }
+3)
+    // Cling
+    compile files('libs/seamless-http-1.1.2.jar')
+    compile files('libs/seamless-util-1.1.2.jar')
+    compile files('libs/seamless-xml-1.1.2.jar')
+    compile files('libs/cling-core-2.1.2.jar')
+    compile files('libs/cling-support-2.1.2.jar')
+    compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.14'
+    compile 'com.android.support:support-v4:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'org.eclipse.jetty:jetty-servlet:8.1.8.v20121106'
+    compile 'org.eclipse.jetty:jetty-client:8.1.8.v20121106'
+    compile 'org.eclipse.jetty:jetty-server:8.1.8.v20121106'
+
+------------------------------------------------------------------------------------------
+
+Ajout du Fragment: PlayerFragment
+App -> new Fragment -> Fragment (Empty)
+Include Fragment factory methode: yes
+Include interface callback: yes
+Name: fragment_player
+copier le source du res/fragment_player
+copier le res/drawable/music.png
+copier le res/raw/alphaville.mp3
+copier le source du PlayerFragment
+Ajouter l'implementation dans le MainActivity
+
+
+MANIFEST:
+Ajouter les permissions
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+Indiquer que c'est l'Activity principale (launcher)
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+Ajout du Fragment: DeviceFragment
+App -> new Fragment -> Fragment (List)
+Object kind: DeviceItem
+Include Fragment factory methode: yes
+Name:
+
+Service Dans le MainActivity:
+- Ajouter le service et dans le onCreate et onDestroy le bind et unbind
+- Dans le AndroidManifest:
+service android:name="org.fourthline.cling.android.AndroidUpnpServiceImpl"/>
+
+BUILD
+Ajouter les repo, les dependences, les jars dans app/lib
+-dans le menu Tools->Android->Synch projet with gradle files
+
+A TESTER SUR TELEPHONE SINON PAS DE SERVICE UPNP

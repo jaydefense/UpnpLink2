@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content" android:orientation="vertical" android:layout_width="fill_parent">
+    <ImageView
+        android:id="@+id/fd_Icon10"
+        android:layout_width="50dip"
+        android:layout_height="50dip" >
+    </ImageView>
+
+    <TextView android:text="@+id/TextView1"
+        android:id="@+id/TextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/fd_Icon10"
+        android:layout_marginTop="5dip"
+        android:layout_marginLeft="5dip">
+    </TextView>
+    <TextView android:text="@+id/TextView2"
+        android:id="@+id/TextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/fd_Icon10"
+        android:layout_below="@+id/TextView1"
+        android:layout_marginLeft="10dip">
+    </TextView>
+    <TextView android:text="@+id/TextViewDate1"
+        android:id="@+id/TextViewDate1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextView1"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="5dip">
+    </TextView>
+</RelativeLayout>

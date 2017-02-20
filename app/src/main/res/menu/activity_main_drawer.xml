@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_browser"
+            android:icon="@drawable/ic_folder_open_black_24dp"
+            android:title="@string/menu_browser" />
+        <item
+            android:id="@+id/nav_player"
+            android:icon="@drawable/ic_play_circle_outline_black_24dp"
+            android:title="@string/menu_player" />
+        <item
+            android:id="@+id/nav_search_upnp"
+            android:icon="@drawable/ic_cast_black_24dp"
+            android:title="@string/menu_search_upnp" />
+        <item
+            android:id="@+id/nav_server_upnp"
+            android:icon="@drawable/ic_tv_black_24dp"
+            android:title="@string/menu_server_upnp" />
+        <item
+            android:id="@+id/nav_server_upnp_started"
+            android:icon="@drawable/ic_tv_black_24dp"
+            android:title="@string/menu_server_upnp"
+            app:actionViewClass="android.widget.Switch" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/menu_settings" />
+    </group>
+</menu>

@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">UpnpLink</string>
+    <string name="title_activity_main">UpnpLink</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_player">Player</string>
+    <string name="menu_browser">File browser</string>
+    <string name="menu_search_upnp">Search UPNP</string>
+    <string name="menu_enable_upnp_server">UPNP server</string>
+    <string name="menu_settings">Settings</string>
+
+    <string name="drawer_main_title">Upnp Link</string>
+    <string name="drawer_subtitle">perraudeau@free.fr</string>
+
+    <string name="title_activity_search_upnp">Upnp</string>
+    <string name="title_activity_file_browser">File</string>
+    <string name="menu_server_upnp">Server Upnp</string>
+</resources>
