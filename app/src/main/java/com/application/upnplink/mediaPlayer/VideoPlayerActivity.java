@@ -15,11 +15,14 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.application.upnplink.R;
+import com.application.upnplink.home.MainActivity;
+import com.application.upnplink.upnp.UpnpUtils;
 
 public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompletionListener,MediaPlayer.OnPreparedListener,View.OnTouchListener {
 
     private VideoView videoview;
     private MediaController mediaController;
+    private String urlToPlay = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +38,13 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
             @Override
             public void onClick(View v) {
                 Toast.makeText(VideoPlayerActivity.this, "Send upnp", Toast.LENGTH_SHORT).show();
+                UpnpUtils.play(MainActivity.upnpService, UpnpUtils.findServiceRenderer(MainActivity.deviceSelected),urlToPlay);
             }
         });
-        String url = null;
+
         if (getIntent().getExtras() != null) {
-            url = getIntent().getExtras().getString("url");
-            playFile( url);
+            urlToPlay = getIntent().getExtras().getString("url");
+            playFile( urlToPlay);
         }
     }
 
@@ -49,10 +53,9 @@ public class VideoPlayerActivity extends Activity implements MediaPlayer.OnCompl
         super.onNewIntent(intent);
         setIntent(intent);
 
-        String url = null;
         if (getIntent().getExtras() != null) {
-            url = getIntent().getExtras().getString("url");
-            playFile( url);
+            urlToPlay = getIntent().getExtras().getString("url");
+            playFile( urlToPlay);
         }
     }
 

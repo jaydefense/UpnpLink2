@@ -47,8 +47,10 @@ public class MainActivity extends AppCompatActivity
     private String fileNameSelected;
     private SharedPreferences sharedPreferences;
 
+    public static AndroidUpnpService upnpService;
+    public static Device deviceSelected;
 
-    private AndroidUpnpService upnpService;
+
     private UpnpRegistryListener registryListener = new UpnpRegistryListener();
     private RendererMachine rendererMachine = null;
 
