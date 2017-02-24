@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 
 import com.application.upnplink.R;
+import com.application.upnplink.home.MainActivity;
 import com.application.upnplink.upnp.UpnpRegistryListener;
 import org.fourthline.cling.model.meta.Device;
 
@@ -40,6 +41,9 @@ public class SearchUpnpActivity extends AppCompatActivity implements OnItemClick
         UpnpRegistryListener.SelectedDevice = device;
         intent.putExtra("DeviceUUID", device.getIdentity().getUdn().getIdentifierString());
         intent.putExtra("DeviceName", device.getDisplayString());
+        // TODO améliorer la ligne suivante
+        MainActivity.deviceSelected = device;
+
         setResult(RESULT_OK, intent);
         finish();
     }

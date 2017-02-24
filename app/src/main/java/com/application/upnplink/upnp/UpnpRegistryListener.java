@@ -82,6 +82,19 @@ public class UpnpRegistryListener extends DefaultRegistryListener {
         deviceRemoved(device);
     }
 
+    @Override
+    public void beforeShutdown(Registry registry) {
+        System.out.println(
+                "Before shutdown, the registry has devices: "
+                        + registry.getDevices().size()
+        );
+    }
+
+    @Override
+    public void afterShutdown() {
+        System.out.println("afterShutdown Shutdown of registry complete!");
+
+    }
     public void deviceAdded(final Device device) {
 //            runOnUiThread(new Runnable() {
 //                public void run() {
